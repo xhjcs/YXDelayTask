@@ -2,7 +2,7 @@
 //  YXDelayTask.m
 //  Example
 //
-//  Created by baye on 2018/1/15.
+//  Created by Heikki on 2018/1/15.
 //  Copyright © 2018年 Heikki. All rights reserved.
 //
 
@@ -37,8 +37,8 @@
             if (_taskBlock) {
                 _taskBlock();
                 _taskBlock = nil;
-                _queue = nil;
             }
+            _queue = nil;
         });
     }
     return self;
