@@ -1,9 +1,9 @@
 //
 //  YXDelayTask.m
-//  KG_Video
+//  Example
 //
 //  Created by baye on 2018/1/15.
-//  Copyright © 2018年 快更. All rights reserved.
+//  Copyright © 2018年 Heikki. All rights reserved.
 //
 
 #import "YXDelayTask.h"
