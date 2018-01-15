@@ -11,6 +11,8 @@
 
 @interface ViewController ()
 
+@property (nonatomic) dispatch_queue_t queue;
+
 @end
 
 @implementation ViewController
@@ -18,13 +20,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    YXDelayTask *delayTask = [YXDelayTask delay:3.0 task:^{
-        NSLog(@"哈哈");
+    self.queue = dispatch_queue_create("com.YXDelayTask.queue", DISPATCH_QUEUE_CONCURRENT);
+    
+    YXDelayTask *delayTask = [YXDelayTask delay:1.0 task:^{
+        NSLog(@"heiheihei");
     }];
     
-    // 延迟一下
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [delayTask cancel];
+    [delayTask cancel];
+    
+    YXDelayTask *delayTask1 = [YXDelayTask delay:3.0 queue:self.queue task:^{
+        NSLog(@"hahaha");
+    }];
+    
+    // 延迟2.5秒取消
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), self.queue, ^{
+        [delayTask1 cancel];
     });
 }
 

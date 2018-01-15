@@ -10,7 +10,7 @@
 
 @interface YXDelayTask ()
 
-@property (nonatomic, copy) void (^taskBlock)(BOOL cancel);
+@property (nonatomic, copy) void (^taskBlock)(void);
 @property (nonatomic) dispatch_queue_t queue;
 
 @end
@@ -28,17 +28,16 @@
 - (instancetype)initWithDelayTime:(NSTimeInterval)delayTime queue:(dispatch_queue_t)queue task:(dispatch_block_t)task {
     if (self = [super init]) {
         _queue = queue ? : dispatch_get_main_queue();
-        _taskBlock = ^(BOOL cancel) {
-            if (!cancel) {
-                if (task) {
-                    task();
-                }
+        _taskBlock = ^{
+            if (task) {
+                task();
             }
         };
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayTime * NSEC_PER_SEC)), _queue, ^{
             if (_taskBlock) {
-                _taskBlock(false);
+                _taskBlock();
                 _taskBlock = nil;
+                _queue = nil;
             }
         });
     }
@@ -47,10 +46,8 @@
 
 - (void)cancel {
     dispatch_async(_queue, ^{
-        if (_taskBlock) {
-            _taskBlock(true);
-            _taskBlock = nil;
-        }
+        _taskBlock = nil;
+        _queue = nil;
     });
 }
 
