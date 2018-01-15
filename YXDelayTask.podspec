@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.summary             = 'Support for the cancellation of the delayed task framework.'
   s.version             = '1.0.0'
   s.homepage            = 'https://github.com/xinghanjie/YXDelayTask'
-  s.license             = { :type => 'MIT', :file => 'LICENSE'}
+  s.license             = { :type => 'MIT', :file => 'LICENSE' }
   
 
   s.author               = { 'Heikki' => 'xinghanjie@gmail.com' }
