@@ -28,11 +28,7 @@
 - (instancetype)initWithDelayTime:(NSTimeInterval)delayTime queue:(dispatch_queue_t)queue task:(dispatch_block_t)task {
     if (self = [super init]) {
         _queue = queue ? : dispatch_get_main_queue();
-        _taskBlock = ^{
-            if (task) {
-                task();
-            }
-        };
+        _taskBlock = [task copy];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayTime * NSEC_PER_SEC)), _queue, ^{
             if (_taskBlock) {
                 _taskBlock();
