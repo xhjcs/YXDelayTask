@@ -34,16 +34,14 @@
                 _taskBlock();
                 _taskBlock = nil;
             }
-            _queue = nil;
         });
     }
     return self;
 }
 
 - (void)cancel {
-    dispatch_async(_queue, ^{
+    dispatch_barrier_async(_queue, ^{
         _taskBlock = nil;
-        _queue = nil;
     });
 }
 
